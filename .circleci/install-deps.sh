@@ -4,8 +4,8 @@ if [ "${CIRCLE_BRANCH}" == "master" ]; then
   sudo apt-get -y install gettext-base
 else
   if [ ! -d "./node_modules" ]; then
-    echo ">>> Installing Node packages using Yarn"
-    npm install --no-progress -s
+    echo ">>> Installing Node packages using NPM"
+    sudo npm install --no-progress -s
   else
     echo ">>> Using cached 'node_modules'"
   fi

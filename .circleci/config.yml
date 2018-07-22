@@ -75,6 +75,10 @@ jobs:
                 name: Running unit tests
                 command: |
                   sudo npm test -- -R min
+            - run:
+                name: Storing code coverage
+                command: |
+                  sudo npm run coveralls
             - persist_to_workspace:
                 root: ~/project
                 paths:
