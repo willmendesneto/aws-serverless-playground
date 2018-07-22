@@ -13,7 +13,7 @@ describe('Core: logger', () => {
   let logger;
 
   beforeEach(() => {
-    pinoMock.returns({ addLevel })
+    pinoMock.returns({ addLevel });
     logger = loggerProvider();
   });
 

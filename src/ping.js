@@ -31,6 +31,6 @@ const start = async (event, context, callback) => {
   } finally {
     callback(error, { message });
   }
-}
+};
 
 module.exports = { start };

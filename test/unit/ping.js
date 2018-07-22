@@ -30,7 +30,7 @@ describe('ping.js', () => {
     await start({}, {}, callback);
     const [error, data] = callback.firstCall.args;
     assert.equal(error, null);
-    assert.equal(data.message, `Event triggered with success at UTC TIME '${Math.floor(Date.now() / 1000)}'`)
+    assert.equal(data.message, `Event triggered with success at UTC TIME '${Math.floor(Date.now() / 1000)}'`);
   });
 
   it('should return an error if HTTP Status returns an error', async () => {

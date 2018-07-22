@@ -7,8 +7,8 @@ let pinoLogger = {};
 const loggerName = [
   process.env.LOGGER_PREFIX || name,
 ]
-.filter(Boolean)
-.join('_').replace(/-/g, '_').toUpperCase();
+  .filter(Boolean)
+  .join('_').replace(/-/g, '_').toUpperCase();
 
 module.exports = () => {
 
