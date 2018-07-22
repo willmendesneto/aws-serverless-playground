@@ -50,6 +50,19 @@ workflows:
                             - master
                 requires:
                     - build
+            - deployment-staging:
+                context: org-global
+                filters:
+                    branches:
+                        only: master
+            - deployment-production:
+                requires:
+                    - approve-deployment
+                filters:
+                    branches:
+                        only: master
+                    tag:
+                        only: /.*/
 jobs:
     build:
         <<: *docker_defaults
@@ -62,6 +75,50 @@ jobs:
                 name: Running unit tests
                 command: |
                   sudo npm test -- -R min
+            - persist_to_workspace:
+                root: ~/project
+                paths:
+                    - repo
+    deployment-staging:
+        <<: *docker_defaults_deployment
+        environment:
+            DEPLOY_ENVIRONMENT: staging
+        steps:
+            - checkout
+            - *attach_workspace
+            - setup_remote_docker:
+                version: 17.05.0-ce
+                docker_layer_caching: true
+            - run:
+                name: Installing Deployment Dependencies
+                command: |
+                    ./.circleci/install-deps.sh
+            - run:
+                name: Deploying Serverless to Staging
+                command: |
+                    ./.circleci/deploy.sh
+            - persist_to_workspace:
+                root: ~/project
+                paths:
+                    - repo
+    deployment-production:
+        <<: *docker_defaults_deployment
+        environment:
+            DEPLOY_ENVIRONMENT: production
+        steps:
+            - checkout
+            - *attach_workspace
+            - setup_remote_docker:
+                version: 17.05.0-ce
+                docker_layer_caching: true
+            - run:
+                name: Installing Deployment Dependencies
+                command: |
+                    ./.circleci/install-deps.sh
+            - run:
+                name: Deploying Serverless to Production
+                command: |
+                    ./.circleci/deploy.sh
             - persist_to_workspace:
                 root: ~/project
                 paths:
