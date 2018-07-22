@@ -1,0 +1,10 @@
+###########################################################
+# VPC CONFIGURATION
+# ADD YOUR CONFIGURATIONS FOR SUBNETS AND OTHER RESOURCES
+# UNCOMMENT THE CONTENT AND ADD YOUR VALUES
+# CONFIGURED PREVIOUSLY
+###########################################################
+# securityGroupIds:
+#   - Ref: SecurityGroup
+# subnetIds:
+#   - subnet-123

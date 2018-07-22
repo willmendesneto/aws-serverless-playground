@@ -1,0 +1,38 @@
+{
+  "name": "aws-serverless-playground",
+  "version": "1.0.0",
+  "description": "AWS Lambda that Pings your Healthcheck HTTP endpoint every weekday at 7:30 AM",
+  "private": false,
+  "author": "Will Mendes <willmendesneto@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "serverless",
+    "aws",
+    "ping",
+    "playground"
+  ],
+  "scripts": {
+    "serverless": "sls",
+    "debug:lambda": "node --inspect-brk ./node_modules/.bin/sls invoke local",
+    "test": "NODE_ENV=test mocha --opts ./test/mocha.opts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willmendesneto/aws-serverless-playground.git"
+  },
+  "bugs": {
+    "url": "https://github.com/willmendesneto/aws-serverless-playground/issues"
+  },
+  "homepage": "https://github.com/willmendesneto/aws-serverless-playground#readme",
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "mocha": "^5.2.0",
+    "proxyquire": "^2.0.1",
+    "serverless": "^1.28.0",
+    "sinon": "^6.1.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.1.2",
+    "pino": "^4.17.3"
+  }
+}

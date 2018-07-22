@@ -1,0 +1,8 @@
+########################################################
+# ENVIRONMENT VARIABLE CONFIGURATION
+# ADD YOUR ENVIRONMENT VARIABLE
+# TO BE USED IN YOUR FUNCTION
+########################################################
+TZ: Australia/Sydney
+API_URL: http://url.com
+LOG_LEVEL: info

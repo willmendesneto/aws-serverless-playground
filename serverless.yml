@@ -1,0 +1,39 @@
+service: aws-playground
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ap-southeast-2
+  timeout: 30
+  memorySize: 128
+  # The stage can be set with the --stage option passed in, defaults to staging
+  stage: ${opt:stage, self:custom.defaultStage}
+  vpc: ${file(configuration/serverless/vpc.${self:provider.stage}.yml)}
+  environment: ${file(configuration/serverless/variables.${self:provider.stage}.yml)}
+  iamRoleStatements: ${file(configuration/serverless/iam-role-statements.${self:provider.stage}.yml)}
+
+package:
+  individually: true
+
+custom:
+  defaultStage: staging
+  prefix: ${self:provider.stage}-${self:service}
+  productionDomainName: ping-poller.url.com
+  stagingDomainName: staging-ping-poller.url.com
+  domainName: ${self:${self:provider.stage}DomainName}
+
+resources: ${file(configuration/serverless/resources.${self:provider.stage}.yml)}
+
+# The functions for this serverless stack
+functions:
+  start:
+    description: "Ping your Healthcheck HTTP endpoint every weekday at 7:30 AM."
+    memorySize: 128
+    handler: src/ping.start
+    timeout: 30
+    events:
+      - schedule: cron(30 21 ? * MON-SUN *) # 9:30PM am in UTC time === 7:30AM in AEST time
+    tags:
+      environment: ${self:provider.stage}
+      application: ${self:service}
+      runtime: ${self:provider.runtime}
