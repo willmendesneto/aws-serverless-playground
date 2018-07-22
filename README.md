@@ -5,6 +5,11 @@
 [![Build Status](https://circleci.com/gh/willmendesneto/aws-serverless-playground.svg?style=shield)](https://circleci.com/gh/willmendesneto/aws-serverless-playground)
 [![Coverage Status](https://coveralls.io/repos/github/willmendesneto/aws-serverless-playground/badge.svg?branch=master)](https://coveralls.io/github/willmendesneto/aws-serverless-playground?branch=master)
 
+[![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat-square)](https://github.com/willmendesneto/aws-serverless-playground/blob/master/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Watch on GitHub](https://img.shields.io/github/watchers/willmendesneto/aws-serverless-playground.svg?style=social)](https://github.com/willmendesneto/aws-serverless-playground/watchers)
+[![Star on GitHub](https://img.shields.io/github/stars/willmendesneto/aws-serverless-playground.svg?style=social)](https://github.com/willmendesneto/aws-serverless-playground/stargazers)
+
 
 ## Frameworks, Libraries and Tools
 
