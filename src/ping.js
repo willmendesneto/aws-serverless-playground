@@ -25,7 +25,7 @@ const start = async (event, context, callback) => {
     message = `Event triggered with success at UTC TIME '${Math.floor(Date.now() / 1000)}'`;
     logger.info(message);
   } catch (err) {
-    message = `Cron Poller returned HTTP status '${response.status || 'Not informed'}'`;
+    message = `Cron Poller returned HTTP status '${response.status}'`;
     error = message;
     logger.error(message, err);
   } finally {

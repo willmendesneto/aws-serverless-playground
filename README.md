@@ -3,6 +3,7 @@
 > AWS Lambda that Pings your Healthcheck HTTP endpoint every weekday at 7:30 AM
 
 [![Build Status](https://circleci.com/gh/willmendesneto/aws-serverless-playground.svg?style=shield)](https://circleci.com/gh/willmendesneto/aws-serverless-playground)
+[![Coverage Status](https://coveralls.io/repos/github/willmendesneto/aws-serverless-playground/badge.svg?branch=master)](https://coveralls.io/github/willmendesneto/aws-serverless-playground?branch=master)
 
 
 ## Frameworks, Libraries and Tools
@@ -11,6 +12,7 @@
 - Mocha as test framework;
 - ESLint as lint tool;
 - NYC as code coverage tooling;
+- Coveralls for code coverage integration in Pull requests and badge generation;
 - Sinon as Standalone test spies, stubs and mocks;
 - Proxyquire to overriding dependencies during testing;
 - Node-Assert assertion library;
