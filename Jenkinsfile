@@ -1,3 +1,11 @@
+// This Jenkins supports 2 different ways to deploy at the first moment
+
+// PLEASE USE ONE OF THESE 2 AND REMOVE THE UNUSED OPTION TO AVOID COMPLEXITY IN YOUR PIPELINE
+
+// - Accessing `Building with Parameters` and adding the jenkins tag value into `DEPLOY_BUILD_NUMBER` input
+
+// - Publishing the package via `np` package, as described on `README.md`
+
 // Set Pipeline Input Parameters
 properties([
   parameters([
@@ -23,6 +31,17 @@ def buildDeploymentDescription(version, environment) {
   return "${version} pushed to ${environment} at ${localIdentifier}"
 }
 
+def isSemverTagged() {
+	def message = sh(returnStdout: true, script: "git show -s --format=%s HEAD").trim()
+	def messagePattern = ~/\d+.\d+.\d+$/
+	def messagePatternWithPrefix = ~/v\d+.\d+.\d+$/
+
+  def matcher = ( message =~ messagePattern )
+	def matcherWithPrefix = ( message =~ messagePatternWithPrefix )
+
+  return matcher.matches() || matcherWithPrefix.matches()
+}
+
 node('linux') {
   checkout scm
 
@@ -35,9 +54,10 @@ node('linux') {
   DO_PRODUCTION_DEPLOYMENT = params.DEPLOY_BUILD_NUMBER != "NOTSET"
   IS_A_PRODUCTION_DEPLOYMENT = DO_PRODUCTION_DEPLOYMENT
   IS_A_STAGING_DEPLOYMENT = IS_DEPLOY_BRANCH && !DO_PRODUCTION_DEPLOYMENT
+  PUBLISHED_NEW_NPM_VERSION = IS_DEPLOY_BRANCH && isSemverTagged()
 
   DEPLOY_BUILD_NUMBER = params.DEPLOY_BUILD_NUMBER
-  if (IS_A_HOTFIX_BRANCH) {
+  if (IS_A_HOTFIX_BRANCH || PUBLISHED_NEW_NPM_VERSION) {
     DEPLOY_BUILD_NUMBER = version
   }
 
