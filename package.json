@@ -17,7 +17,7 @@
     "debug:lambda": "node --inspect-brk ./node_modules/.bin/sls invoke local",
     "pretest": "eslint .",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage",
-    "test": "NODE_ENV=test nyc --reporter=lcov --reporter=html mocha --opts ./test/mocha.opts"
+    "test": "NODE_ENV=test LOG_LEVEL=silent nyc --reporter=lcov --reporter=html mocha --opts ./test/mocha.opts"
   },
   "repository": {
     "type": "git",

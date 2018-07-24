@@ -16,12 +16,13 @@ module.exports = () => {
     return pinoLogger;
   }
 
+
   if (!logger) {
     logger = pino({
-      level: process.env.LOG_LEVEL || 'info',
-      enabled: process.env.NODE_ENV !== 'test',
-      name: 'aws-serverless-playground',
+      name: loggerName,
       safe: true,
+      timestamp: pino.stdTimeFunctions.slowTime,
+      json: process.env.NODE_ENV !== 'development',
       serializers: {
         req: pino.stdSerializers.req,
         res: pino.stdSerializers.res,
@@ -29,6 +30,8 @@ module.exports = () => {
     });
     logger.addLevel('verbose', 25);
     logger.addLevel('silly', 5);
+
+    logger.level = process.env.LOG_LEVEL || 'info';
   }
 
   const pinoFunctions = Object.keys(logger).filter(key => typeof logger[key] === 'function');
