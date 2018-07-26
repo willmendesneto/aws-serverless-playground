@@ -1,5 +1,27 @@
 const pino = require('pino');
+
 const { name } = require('../../package.json');
+
+const levelsToAdd = {
+  25: 'verbose',
+  5: 'silly',
+};
+
+const defaultLevels = Object.assign(
+  {},
+  pino.levels.labels,
+  levelsToAdd,
+);
+
+const pretty = pino.pretty({
+  formatter: chunk => JSON.stringify(
+    Object.assign(
+      {},
+      chunk,
+      { level: defaultLevels[chunk.level] || chunk.level },
+    ),
+  ),
+});
 
 let logger;
 let pinoLogger = {};
@@ -16,8 +38,8 @@ module.exports = () => {
     return pinoLogger;
   }
 
-
   if (!logger) {
+    pretty.pipe(process.stdout);
     logger = pino({
       name: loggerName,
       safe: true,
@@ -27,18 +49,16 @@ module.exports = () => {
         req: pino.stdSerializers.req,
         res: pino.stdSerializers.res,
       },
-    });
-    logger.addLevel('verbose', 25);
-    logger.addLevel('silly', 5);
+    }, pretty);
+    const levelToAddKeys = Object.keys(levelsToAdd);
 
+    levelToAddKeys.forEach(key => {
+      logger.addLevel(levelsToAdd[key], key);
+    });
     logger.level = process.env.LOG_LEVEL || 'info';
+
+    logger.info(`New levels added "${levelToAddKeys.join('","')}"`);
   }
 
-  const pinoFunctions = Object.keys(logger).filter(key => typeof logger[key] === 'function');
-
-  pinoFunctions.forEach((method) => {
-    pinoLogger[method] = args => logger[method](`[${loggerName}]`, args);
-  });
-
-  return pinoLogger;
+  return logger;
 };
